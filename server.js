@@ -2,6 +2,7 @@ var express = require("express");
 var app = express();
 var server= require("http").Server(app);
 var io = require("socket.io")(server);
+var fs = require("fs");
 var messages = [];
 
 app.use(express.static("."));
@@ -21,4 +22,12 @@ io.on("connection", function(socket){
         io.sockets.emit("display message", data);
     });
 
+    var myJSON =JSON.stringify(messages);
+
+    function Messages (){
+        fs.writeFileSync("messages.json", myJSON);
+    
+    }
+    Messages();
+    
 });
